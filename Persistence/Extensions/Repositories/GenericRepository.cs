@@ -27,7 +27,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
         exist.UpdateDate = DateTime.Now;
 
         _applicationDbContext.Set<T>().Update(exist);
-        await _applicationDbContext.SaveChangesAsync();
 
         return exist;
     }
@@ -37,7 +36,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
         return await _applicationDbContext.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
     }
 
-    public async Task<T> GetAsync(int id)
+    public async Task<T> GetByIdAsync(int id)
     {
         var exist = await _applicationDbContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
 
@@ -56,7 +55,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
         entity.IsActive = true;
 
         await _applicationDbContext.Set<T>().AddAsync(entity);
-        await _applicationDbContext.SaveChangesAsync();
 
         return entity;
     }
@@ -73,7 +71,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
         entity.UpdateDate = DateTime.Now;
 
         _applicationDbContext.Set<T>().Update(entity);
-        await _applicationDbContext.SaveChangesAsync();
 
         return entity;
     }

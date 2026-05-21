@@ -9,9 +9,17 @@
   <ItemGroup>
     <Folder Include="Commons\Mapping\" />
     <Folder Include="Dtos\Users\" />
-    <Folder Include="Features\Users\Commands\" />
     <Folder Include="Features\Users\Queries\" />
     <Folder Include="Interfaces\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>
