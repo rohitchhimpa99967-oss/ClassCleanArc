@@ -36,14 +36,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
         return await _applicationDbContext.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
     }
 
-    public async Task<T> GetByIdAsync(int id)
+    public async Task<T?> GetByIdAsync(int id)
     {
         var exist = await _applicationDbContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
-
-        if (exist == null)
-        {
-            throw new Exception($"{typeof(T).Name} not found");
-        }
 
         return exist;
     }

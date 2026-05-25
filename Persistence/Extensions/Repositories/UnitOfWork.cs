@@ -22,7 +22,7 @@ public class UnitOfWork : IUnitOfWork
     {
         var type = typeof(T).Name;
 
-        if(_repo.ContainsKey(type))
+        if(!_repo.ContainsKey(type))
         {
             var repositori= new GenericRepository<T>(_context);
 

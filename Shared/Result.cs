@@ -11,7 +11,7 @@ public class Result<T> : IResult<T>
     public bool IsSuccess { get ; set ; }
     public int Code { get ; set ; }
     public string? Token { get ; set; }
-    public T? Data { get ; set ; }
+    public T? Data { get ; set ; }/
     public Exception? Exception { get ; set ; }
 
 
@@ -45,6 +45,16 @@ public class Result<T> : IResult<T>
             Code = 200,
             Data = data,
             Token = token
+        };
+    }
+
+    public static Result<T> BadRequest(string message)
+    {
+        return new Result<T>
+        {
+            Message = message,
+            IsSuccess = false,
+            Code = 400
         };
     }
 }
