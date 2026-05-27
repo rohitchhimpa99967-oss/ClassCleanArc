@@ -38,7 +38,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
 
     public async Task<T?> GetByIdAsync(int id)
     {
-        var exist = await _applicationDbContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+        var exist = await _applicationDbContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id&&!x.IsDeleted);
 
         return exist;
     }
