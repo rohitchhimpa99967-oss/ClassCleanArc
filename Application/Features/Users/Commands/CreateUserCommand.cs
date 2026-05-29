@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Commons.Mapping.Commons;
+using Application.Interfaces.Repositories;
+using AutoMapper;
 using Domain.Entities.Users;
 using MediatR;
 using Shared;
@@ -9,7 +11,7 @@ using System.Text;
 
 namespace Application.Features.Users.Commands;
 
-public class CreateUserCommand : IRequest<Result<int>>
+public class CreateUserCommand : IRequest<Result<int>>,ICreateMapFrom<User>
 {
     public string Name { get; set; }
     public string Email { get; set; }
@@ -19,20 +21,24 @@ public class CreateUserCommand : IRequest<Result<int>>
 internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<int>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public CreateUserCommandHandler(IUnitOfWork unitOfWork)
+    public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<Result<int>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = new User
-        {
-            Name = request.Name,
-            Email = request.Email,
-            Password = request.Password
-        };
+        //var user = new User
+        //{
+        //    Name = request.Name,
+        //    Email = request.Email,
+        //    Password = request.Password
+        //};
+
+        var user = _mapper.Map<User>(request);
 
         await _unitOfWork.Repository<User>().PostAsync(user);
         await _unitOfWork.Save(cancellationToken);

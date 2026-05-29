@@ -14,6 +14,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
         _applicationDbContext = applicationDbContext;
     }
 
+    public IQueryable<T> Entities => _applicationDbContext.Set<T>();
+
     public async Task<T> DeleteAsync(int id)
     {
         var exist = await _applicationDbContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);

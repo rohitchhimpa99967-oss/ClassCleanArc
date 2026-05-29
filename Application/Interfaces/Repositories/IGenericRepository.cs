@@ -6,6 +6,7 @@ namespace Application.Interfaces.Repositories;
 
 public interface IGenericRepository<T> where T : class 
 {
+    IQueryable<T> Entities { get; }
     Task<T> PostAsync(T entity);
     Task<T> PutAsync(int id,T entity);
     Task<T> DeleteAsync(int id);
